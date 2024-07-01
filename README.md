@@ -1,4 +1,4 @@
-## This repository showcases a Note-Taking App implemented using the following architectures:
+## This repository showcases a simple Note-Taking App implemented using the following architectures:
 
 - MVVM (Model-View-ViewModel)
 - MVC (Model-View-Controller)
