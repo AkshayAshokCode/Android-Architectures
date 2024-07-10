@@ -1,42 +1,42 @@
-package com.akshayashokcode.androidarchitectures.mvvm.view
+package com.akshayashokcode.androidarchitectures.mvc.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.akshayashokcode.androidarchitectures.mvvm.model.Note
-import com.akshayashokcode.androidarchitectures.mvvm.viewmodel.NoteViewModel
 import com.akshayashokcode.androidarchitectures.R
+import com.akshayashokcode.androidarchitectures.mvc.controller.NoteController
+import com.akshayashokcode.androidarchitectures.mvc.model.NoteRepository
+import com.akshayashokcode.androidarchitectures.mvc.model.Note
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MainActivity : AppCompatActivity() {
+class MvcActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: NoteViewModel
+    private lateinit var controller: NoteController
     private lateinit var adapter: NoteAdapter
+    private lateinit var noteRepository: NoteRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
+        noteRepository = NoteRepository()
+        controller = NoteController(noteRepository)
 
         val recyclerView = findViewById<RecyclerView>(R.id.noteList)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        viewModel.notes.observe(this, Observer { notes ->
-            adapter = NoteAdapter(notes)
-            recyclerView.adapter = adapter
-        })
+        adapter = NoteAdapter(controller.getNotes())
+        recyclerView.adapter = adapter
 
         findViewById<FloatingActionButton>(R.id.addNoteButton).setOnClickListener {
             val newNote = Note(
-                id = viewModel.notes.value?.size ?: 0,
+                id = controller.getNotes().size,
                 title = "New Note",
                 content = "Content"
             )
-            viewModel.addNote(newNote)
+            controller.addNote(newNote)
+            adapter.notifyDataSetChanged() // Notify adapter directly
         }
     }
 }
