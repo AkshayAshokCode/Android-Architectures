@@ -4,14 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.akshayashokcode.androidarchitectures.mvc.model.Note
 import com.akshayashokcode.androidarchitectures.R
+import com.akshayashokcode.androidarchitectures.mvc.model.Note
 
 
-class NoteAdapter(private val notes: List<Note>) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+class NoteAdapter(private var notes: List<Note>) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -25,6 +23,11 @@ class NoteAdapter(private val notes: List<Note>) : RecyclerView.Adapter<NoteAdap
 
     override fun getItemCount(): Int {
         return notes.size
+    }
+
+    fun updateNotes(newNotes: List<Note>) {
+        notes = newNotes
+        notifyDataSetChanged()
     }
 
     class NoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
