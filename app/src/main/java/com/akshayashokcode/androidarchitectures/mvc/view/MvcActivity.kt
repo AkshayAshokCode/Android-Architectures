@@ -1,6 +1,7 @@
 package com.akshayashokcode.androidarchitectures.mvc.view
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,10 +16,14 @@ class MvcActivity : AppCompatActivity() {
     private lateinit var controller: NoteController
     private lateinit var adapter: NoteAdapter
     private lateinit var noteRepository: NoteRepository
+    private lateinit var architectureTitleTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        architectureTitleTextView = findViewById(R.id.architectureTitle)
+        architectureTitleTextView.text = "MVC Architecture"
 
         noteRepository = NoteRepository()
         controller = NoteController(noteRepository)
@@ -36,7 +41,7 @@ class MvcActivity : AppCompatActivity() {
                 content = "Content"
             )
             controller.addNote(newNote)
-            adapter.notifyDataSetChanged() // Notify adapter directly
+            adapter.updateNotes(controller.getNotes()) // Notify adapter directly
         }
     }
 }

@@ -1,46 +1,60 @@
-package com.akshayashokcode.androidarchitectures.mvvm.view
+package com.akshayashokcode.androidarchitectures.mvp.view
 
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.akshayashokcode.androidarchitectures.R
-import com.akshayashokcode.androidarchitectures.mvvm.model.Note
-import com.akshayashokcode.androidarchitectures.mvvm.viewmodel.NoteViewModel
+import com.akshayashokcode.androidarchitectures.mvp.model.Note
+import com.akshayashokcode.androidarchitectures.mvp.model.NoteRepository
+import com.akshayashokcode.androidarchitectures.mvp.presenter.NotePresenter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class MvvmActivity : AppCompatActivity() {
+class MvpActivity : AppCompatActivity() , NoteView {
 
-    private lateinit var viewModel: NoteViewModel
+    private lateinit var presenter: NotePresenter
     private lateinit var adapter: NoteAdapter
+    private lateinit var noteRepository: NoteRepository
     private lateinit var architectureTitleTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         architectureTitleTextView = findViewById(R.id.architectureTitle)
-        architectureTitleTextView.text = "MVVM Architecture"
-        viewModel = ViewModelProvider(this)[NoteViewModel::class.java]
+        architectureTitleTextView.text = "MVP Architecture"
+
+        noteRepository = NoteRepository()
+        presenter = NotePresenter(this, noteRepository)
 
         val recyclerView = findViewById<RecyclerView>(R.id.noteList)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        adapter = NoteAdapter(listOf()) // Initially empty list
+        adapter = NoteAdapter(listOf())
         recyclerView.adapter = adapter
 
-        viewModel.notes.observe(this) { notes ->
-            adapter.updateNotes(notes)
-        }
+        presenter.loadNotes()
 
         findViewById<FloatingActionButton>(R.id.addNoteButton).setOnClickListener {
             val newNote = Note(
-                id = viewModel.notes.value?.size ?: 0,
+                id = presenter.getNotes().size,
                 title = "New Note",
                 content = "Content"
             )
-            viewModel.addNote(newNote)
+            presenter.addNote(newNote)
         }
+    }
+
+    override fun displayNotes(notes: List<Note>) {
+        adapter.updateNotes(notes)
+    }
+
+    override fun displayNoteAdded(note: Note) {
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun displayNoteDeleted(note: Note) {
+        adapter.notifyDataSetChanged()
     }
 }

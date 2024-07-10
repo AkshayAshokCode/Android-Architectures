@@ -1,4 +1,4 @@
-package com.akshayashokcode.androidarchitectures.mvvm.view
+package com.akshayashokcode.androidarchitectures.mvp.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.akshayashokcode.androidarchitectures.R
-import com.akshayashokcode.androidarchitectures.mvvm.model.Note
+import com.akshayashokcode.androidarchitectures.mvp.model.Note
 
 
 class NoteAdapter(private var notes: List<Note>) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {

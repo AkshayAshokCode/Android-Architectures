@@ -4,13 +4,23 @@
     android:id="@+id/main"
     android:layout_height="match_parent"
     >
+    <TextView
+        android:id="@+id/architectureTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:background="@color/black"
+        android:textColor="@android:color/white"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/noteList"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_above="@+id/addNoteButton"
-        android:layout_alignParentTop="true" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/architectureTitle" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addNoteButton"
