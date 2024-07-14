@@ -1,50 +1,45 @@
 package com.akshayashokcode.androidarchitectures.cleanMvvm.presentation.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.akshayashokcode.androidarchitectures.cleanMvvm.data.local.NoteDatabase
+import com.akshayashokcode.androidarchitectures.cleanMvvm.data.repository.NoteRepositoryImpl
 import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.model.Note
 import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.usecase.AddNoteUseCase
 import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.usecase.DeleteNoteUseCase
 import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.usecase.GetNotesUseCase
 import kotlinx.coroutines.launch
 
-class NoteViewModel(
-    private val getNotesUseCase: GetNotesUseCase,
-    private val addNoteUseCase: AddNoteUseCase,
+class NoteViewModel(application: Application) : AndroidViewModel(application) {
+    private val addNoteUseCase: AddNoteUseCase
     private val deleteNoteUseCase: DeleteNoteUseCase
-) : ViewModel() {
+    private val getNotesUseCase: GetNotesUseCase
 
-    private val _notes = MutableLiveData<List<Note>>()
-    val notes: LiveData<List<Note>> get() = _notes
+    val notes: LiveData<List<Note>>
 
     init {
-        fetchNotes()
+        val noteDao = NoteDatabase.getDatabase(application).noteDao()
+        val repository = NoteRepositoryImpl(noteDao)
+        addNoteUseCase = AddNoteUseCase(repository)
+        deleteNoteUseCase = DeleteNoteUseCase(repository)
+        getNotesUseCase = GetNotesUseCase(repository)
+
+        notes = getNotesUseCase()
     }
 
-    private fun fetchNotes() {
+    fun addNote(note: Note) {
         viewModelScope.launch {
-            _notes.value = getNotesUseCase()
-        }
-    }
-
-    fun addNote(title: String, content: String) {
-        viewModelScope.launch {
-            val newNote = Note(
-                id = 0,
-                title = title,
-                content = content
-            )
-            addNoteUseCase(newNote)
-            fetchNotes()
+            addNoteUseCase(note)
         }
     }
 
     fun deleteNote(note: Note) {
         viewModelScope.launch {
             deleteNoteUseCase(note)
-            fetchNotes()
         }
     }
 }

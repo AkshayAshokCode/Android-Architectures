@@ -6,6 +6,6 @@ import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.model.Note
 class DeleteNoteUseCase(private val noteRepository: NoteRepository) {
 
     suspend operator fun invoke(note: Note) {
-        noteRepository.deleteNote(note)
+        noteRepository.delete(note)
     }
 }

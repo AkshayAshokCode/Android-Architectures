@@ -1,19 +1,10 @@
 package com.akshayashokcode.androidarchitectures.cleanMvvm.data.repository
 
-import com.akshayashokcode.androidarchitectures.cleanMvvm.data.local.NoteDao
+import androidx.lifecycle.LiveData
 import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.model.Note
 
-class NoteRepository(private val noteDao: NoteDao) {
-
-    suspend fun getNotes(): List<Note> {
-        return noteDao.getNotes()
-    }
-
-    suspend fun addNote(note: Note) {
-        noteDao.insert(note)
-    }
-
-    suspend fun deleteNote(note: Note) {
-        noteDao.delete(note)
-    }
+interface NoteRepository {
+    fun getAllNotes(): LiveData<List<Note>>
+    suspend fun insert(note: Note)
+    suspend fun delete(note: Note)
 }

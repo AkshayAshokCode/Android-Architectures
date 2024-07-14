@@ -7,11 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.akshayashokcode.androidarchitectures.R
-import com.akshayashokcode.androidarchitectures.cleanMvvm.data.local.NoteDatabase
-import com.akshayashokcode.androidarchitectures.cleanMvvm.data.repository.NoteRepository
-import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.usecase.AddNoteUseCase
-import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.usecase.DeleteNoteUseCase
-import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.usecase.GetNotesUseCase
+import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.model.Note
 import com.akshayashokcode.androidarchitectures.cleanMvvm.presentation.viewmodel.NoteViewModel
 import com.akshayashokcode.androidarchitectures.cleanMvvm.presentation.viewmodel.NoteViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -19,13 +15,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class CleanMainActivity: AppCompatActivity() {
     private lateinit var architectureTitleTextView: TextView
 
-    private val viewModel: NoteViewModel by viewModels() {
-        NoteViewModelFactory(
-            GetNotesUseCase(NoteRepository(NoteDatabase.getDatabase(applicationContext).noteDao())),
-            AddNoteUseCase(NoteRepository(NoteDatabase.getDatabase(applicationContext).noteDao())),
-            DeleteNoteUseCase(NoteRepository(NoteDatabase.getDatabase(applicationContext).noteDao()))
-        )
-    }
+    private val viewModel: NoteViewModel by viewModels { NoteViewModelFactory(application) }
+
     private lateinit var adapter: NoteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,12 +30,17 @@ class CleanMainActivity: AppCompatActivity() {
         adapter = NoteAdapter(listOf()) // Initially empty list
         recyclerView.adapter = adapter
 
-        viewModel.notes.observe(this, { notes ->
+        viewModel.notes.observe(this) { notes ->
             adapter.updateNotes(notes)
-        })
+        }
 
         findViewById<FloatingActionButton>(R.id.addNoteButton).setOnClickListener {
-            viewModel.addNote("New Note", "Content")
+            val newNote = Note(
+                id = 0,
+                title = "New Note",
+                content = "Content"
+            )
+            viewModel.addNote(newNote)
         }
     }
 }
