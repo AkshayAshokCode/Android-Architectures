@@ -29,10 +29,10 @@ Each architecture is implemented in its own package, providing a clear and isola
     - intent
   - Clean+MVVM
     - data
+      - local
       - repository
     - domain
       - model
-      - repository
       - usecase
     - presentation (MVVM)
       - view
