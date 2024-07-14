@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.akshayashokcode.androidarchitectures.R
+import com.akshayashokcode.androidarchitectures.cleanMvvm.data.local.NoteDatabase
 import com.akshayashokcode.androidarchitectures.cleanMvvm.data.repository.NoteRepository
 import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.usecase.AddNoteUseCase
 import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.usecase.DeleteNoteUseCase
@@ -20,9 +21,9 @@ class CleanMainActivity: AppCompatActivity() {
 
     private val viewModel: NoteViewModel by viewModels() {
         NoteViewModelFactory(
-            GetNotesUseCase(NoteRepository()),
-            AddNoteUseCase(NoteRepository()),
-            DeleteNoteUseCase(NoteRepository())
+            GetNotesUseCase(NoteRepository(NoteDatabase.getDatabase(applicationContext).noteDao())),
+            AddNoteUseCase(NoteRepository(NoteDatabase.getDatabase(applicationContext).noteDao())),
+            DeleteNoteUseCase(NoteRepository(NoteDatabase.getDatabase(applicationContext).noteDao()))
         )
     }
     private lateinit var adapter: NoteAdapter

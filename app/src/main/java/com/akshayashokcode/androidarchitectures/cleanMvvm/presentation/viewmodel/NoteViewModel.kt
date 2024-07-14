@@ -32,7 +32,7 @@ class NoteViewModel(
     fun addNote(title: String, content: String) {
         viewModelScope.launch {
             val newNote = Note(
-                id = _notes.value?.size ?: 0,
+                id = 0,
                 title = title,
                 content = content
             )

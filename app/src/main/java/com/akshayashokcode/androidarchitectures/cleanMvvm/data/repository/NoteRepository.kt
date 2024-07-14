@@ -1,21 +1,19 @@
 package com.akshayashokcode.androidarchitectures.cleanMvvm.data.repository
 
+import com.akshayashokcode.androidarchitectures.cleanMvvm.data.local.NoteDao
 import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.model.Note
-import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.repository.NoteRepositoryInterface
 
-class NoteRepository : NoteRepositoryInterface {
+class NoteRepository(private val noteDao: NoteDao) {
 
-    private val notes = mutableListOf<Note>()
-
-    override suspend fun getNotes(): List<Note> {
-        return notes
+    suspend fun getNotes(): List<Note> {
+        return noteDao.getNotes()
     }
 
-    override suspend fun addNote(note: Note) {
-        notes.add(note.copy(id = notes.size)) // Assign incremental IDs
+    suspend fun addNote(note: Note) {
+        noteDao.insert(note)
     }
 
-    override suspend fun deleteNote(note: Note) {
-        notes.remove(note)
+    suspend fun deleteNote(note: Note) {
+        noteDao.delete(note)
     }
 }

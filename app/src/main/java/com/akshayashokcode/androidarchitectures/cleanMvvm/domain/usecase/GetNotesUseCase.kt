@@ -1,9 +1,9 @@
 package com.akshayashokcode.androidarchitectures.cleanMvvm.domain.usecase
 
+import com.akshayashokcode.androidarchitectures.cleanMvvm.data.repository.NoteRepository
 import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.model.Note
-import com.akshayashokcode.androidarchitectures.cleanMvvm.domain.repository.NoteRepositoryInterface
 
-class GetNotesUseCase(private val noteRepository: NoteRepositoryInterface) {
+class GetNotesUseCase(private val noteRepository: NoteRepository) {
 
     suspend operator fun invoke(): List<Note> {
         return noteRepository.getNotes()
