@@ -4,6 +4,7 @@
 - MVC (Model-View-Controller)
 - MVP (Model-View-Presenter)
 - MVI (Model-View-Intent)
+- Clean Architecture + MVVM
 
 
 Each architecture is implemented in its own package, providing a clear and isolated example of how the architecture can be applied to a simple Android app.
@@ -26,4 +27,14 @@ Each architecture is implemented in its own package, providing a clear and isola
     - model
     - view
     - intent
+  - Clean+MVVM
+    - data
+      - repository
+    - domain
+      - model
+      - repository
+      - usecase
+    - presentation (MVVM)
+      - view
+      - viewmodel
 
