@@ -4,7 +4,7 @@
   - MVVM (Model-View-ViewModel) ⭐
   - MVC (Model-View-Controller) ⭐
   - MVP (Model-View-Presenter) ⭐
-  - MVI (Model-View-Intent) ⭐
+  - MVI (Model-View-Intent) ⏳
 - Layered Architectures:
   - Clean Architecture + MVVM ⭐
   - Hexagonal Architecture (Ports and Adapters) ⏳
