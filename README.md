@@ -21,3 +21,6 @@
 
 
 Each architecture is implemented in its own package, providing a clear and isolated example of how the architecture can be applied to a simple Android app.
+
+Each architecture has its strengths and trade-offs, depending on project requirements, team expertise, and application complexity. Understanding these differences helps in selecting the most suitable architecture for your specific needs, ensuring robust and maintainable Android applications.
+
