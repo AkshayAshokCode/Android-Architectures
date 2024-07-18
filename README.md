@@ -21,33 +21,3 @@
 
 
 Each architecture is implemented in its own package, providing a clear and isolated example of how the architecture can be applied to a simple Android app.
-
-### Project Structure:
-- com.akshayashokcode.androidarchitectures
-  - MVVM
-    - model
-    - view
-    - viewmodel
-  - MVC
-    - model
-    - view
-    - controller
-  - MVP
-    - model
-    - view
-    - presenter
-  - MVI
-    - model
-    - view
-    - intent
-  - Clean+MVVM
-    - data
-      - local
-      - repository
-    - domain
-      - model
-      - usecase
-    - presentation (MVVM)
-      - view
-      - viewmodel
-
