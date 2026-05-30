@@ -1,26 +1,25 @@
-## This repository showcases a simple Note-Taking App implemented using the following architectures:
+# Android Architectures
 
-- Classic UI Patterns:
-  - MVVM (Model-View-ViewModel) ⭐
-  - MVC (Model-View-Controller) ⭐
-  - MVP (Model-View-Presenter) ⭐
-  - MVI (Model-View-Intent) ⭐
-- Layered Architectures:
-  - Clean Architecture + MVVM ⭐
+A practical, side-by-side comparison of Android architecture patterns — each implemented as a simple Note-Taking app in Kotlin, so you can see exactly how the same feature is built across different approaches.
+
+## Architectures Covered
+
+- **Classic UI Patterns:**
+  - MVVM (Model-View-ViewModel) ✅
+  - MVC (Model-View-Controller) ✅
+  - MVP (Model-View-Presenter) ✅
+  - MVI (Model-View-Intent) ✅
+- **Layered Architectures:**
+  - Clean Architecture + MVVM ✅
   - Hexagonal Architecture (Ports and Adapters) ⏳
   - Layered Architecture ⏳
-- Specialized Architectures:
+- **Specialized Architectures:**
   - FLUX Architecture ⏳
-  - VIPER (View, Interactor, Presenter, Entity, Router) ⏳
+  - VIPER ⏳
   - Event-Driven Architecture ⏳
-  - CQRS (Command Query Responsibility Segregation) ⏳
-  - Microkernel Architecture ⏳
+  - CQRS ⏳
   - Redux Architecture ⏳
-- Component-Based Architectures:
+- **Component-Based Architectures:**
   - Component-Based Architecture ⏳
 
-
-Each architecture is implemented in its own package, providing a clear and isolated example of how the architecture can be applied to a simple Android app.
-
-Each architecture has its strengths and trade-offs, depending on project requirements, team expertise, and application complexity. Understanding these differences helps in selecting the most suitable architecture for your specific needs, ensuring robust and maintainable Android applications.
-
+Each architecture is implemented in its own package, providing a clear and isolated example. Understanding these trade-offs helps in selecting the right architecture for your project — balancing complexity, testability, and maintainability.
